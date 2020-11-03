@@ -1,0 +1,36 @@
+// variables
+const urlBase = "https://api.punkapi.com/v2/beers";
+
+
+// Create an async function called "getBeers" that uses fetch to get our beer data from the urlBase.
+// Render each beer name inside the div with the class of beers that currently exists in the HTML file.
+
+async function getBeers(){
+    //Fetch
+    const beerPromise = await fetch(urlBase)
+    
+    const response = await beerPromise.json();
+    console.log(response[0])
+    // Render Beers
+    const beerDiv = document.querySelector('.beers')
+    let beerHtml = '';
+    response.forEach(beer => {
+        beerHtml += `
+        <div class='beer-wrapper card'>
+        <div class='beer'>
+        <img class='beer__img' src="${beer.image_url}"
+        <h3>${beer.name}</h3>
+        <span class='beer__info'>
+        <span>ABV: ${beer.abv}%</span>
+        <span>IBU: ${beer.ibu}</span>
+        </span>
+        </div>
+        </div>`
+        
+    })
+    
+   beerDiv.innerHTML = beerHtml;
+   
+}
+
+getBeers();
